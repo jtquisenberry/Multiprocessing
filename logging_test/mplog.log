@@ -1,0 +1,10 @@
+2023-02-08 21:02:34,405 foo             INFO     MainProcess TOP OF MAIN
+2023-02-08 21:02:34,484 foo             INFO     worker 1   863132 [LOGGING THREAD]
+2023-02-08 21:02:34,484 foo             INFO     worker 1   863132 [LOGGING THREAD]
+2023-02-08 21:02:34,490 foo             INFO     worker 2   866252 [LOGGING THREAD]
+2023-02-08 21:02:34,490 foo             INFO     worker 2   866252 [LOGGING THREAD]
+2023-02-08 21:02:34,495 foo             INFO     worker 3   864820 [LOGGING THREAD]
+2023-02-08 21:02:34,496 foo             INFO     worker 3   864820 [LOGGING THREAD]
+2023-02-08 21:02:34,578 foo             WARNING  cows       CHILD [LOGGING THREAD]
+2023-02-08 21:02:34,585 foo             WARNING  cows       CHILD [LOGGING THREAD]
+2023-02-08 21:02:34,588 foo             WARNING  cows       CHILD [LOGGING THREAD]

@@ -24,18 +24,15 @@ def worker_process(q):
     root.setLevel(logging.DEBUG)
     root.addHandler(qh)
     print(root)
-    loggers = ['foo']
     for i in range(2):
-        logger = logging.getLogger(random.choice(loggers))
+        logger = logging.getLogger('foo')
         logger.info(os.getpid())
-
     foo = logging.getLogger()
     qx = foo.handlers
     print("qx", qx[0].queue)
     p = Process(target=child_of_worker, name='cows', args=(qx[0].queue,))
     p.start()
     p.join()
-    print(logging.getLogger())
 
 
 def child_of_worker(q):
@@ -104,8 +101,7 @@ if __name__ == '__main__':
         wp.start()
     logging.config.dictConfig(d)
     logger = logging.getLogger('foo')
-    print('yyyyyyyyyy', logger)
-    logger.info('TOP OF FOO')
+    logger.info('TOP OF MAIN')
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
     lp = threading.Thread(target=logger_thread, args=(q,))
