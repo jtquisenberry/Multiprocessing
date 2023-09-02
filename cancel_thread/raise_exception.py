@@ -5,6 +5,8 @@
 import threading
 import ctypes
 import time
+import subprocess
+import sys
 
 
 class ThreadWithException(threading.Thread):
@@ -20,8 +22,13 @@ class ThreadWithException(threading.Thread):
 
             # Terminating a thread using raise_exception does
             # not terminate the child thread.
-            t2 = threading.Thread(target=do_thread2)
-            t2.start()
+            # t2 = threading.Thread(target=do_thread2)
+            # t2.start()
+
+            # raise_exception cannot kill a thread that is busy outside the
+            # Python interpreter.
+            # out = subprocess.check_output(['sh'])
+            # print(out)
 
             while True:
                 print('running ' + self.name)
@@ -47,14 +54,19 @@ class ThreadWithException(threading.Thread):
             ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
             print('Exception raise failure')
 
+
 def do_thread2():
     while True:
         print("thread2")
         time.sleep(1)
 
 
-t1 = ThreadWithException('Thread 1')
-t1.start()
-time.sleep(2)
-t1.raise_exception()
-t1.join()
+if __name__ == '__main__':
+    print(sys.platform)
+    if sys.platform not in ('linux', 'posix'):
+        raise NotImplementedError("Killing a thread with an asynchronous exception is supported in Linux only.")
+    t1 = ThreadWithException('Thread 1')
+    t1.start()
+    time.sleep(2)
+    t1.raise_exception()
+    t1.join()
