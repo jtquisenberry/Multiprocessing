@@ -15,9 +15,10 @@ class thread_with_exception(threading.Thread):
  
         # target function of the thread class
         try:
-            while True:
-                #print('running ' + self.name)
-                pass
+            time.sleep(500)
+            #while True:
+            #    #print('running ' + self.name)
+            #    pass
         finally:
             print('ended')
           
