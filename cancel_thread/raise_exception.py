@@ -5,22 +5,29 @@
 import threading
 import ctypes
 import time
-  
-class thread_with_exception(threading.Thread):
+
+
+class ThreadWithException(threading.Thread):
     def __init__(self, name):
         threading.Thread.__init__(self)
         self.name = name
              
     def run(self):
- 
         # target function of the thread class
         try:
-            time.sleep(500)
-            #while True:
-            #    #print('running ' + self.name)
-            #    pass
+            # raise_exception cannot kill a sleeping thread.
+            # time.sleep(500)
+
+            # Terminating a thread using raise_exception does
+            # not terminate the child thread.
+            t2 = threading.Thread(target=do_thread2)
+            t2.start()
+
+            while True:
+                print('running ' + self.name)
+                time.sleep(1)
         finally:
-            print('ended')
+            print('Thread 1 ended')
           
     def get_id(self):
  
@@ -39,8 +46,14 @@ class thread_with_exception(threading.Thread):
         if res > 1:
             ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
             print('Exception raise failure')
-      
-t1 = thread_with_exception('Thread 1')
+
+def do_thread2():
+    while True:
+        print("thread2")
+        time.sleep(1)
+
+
+t1 = ThreadWithException('Thread 1')
 t1.start()
 time.sleep(2)
 t1.raise_exception()
